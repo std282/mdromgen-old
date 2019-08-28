@@ -8,15 +8,14 @@ compilation and ROM generation.
 
 ## Preparation
 
-I will assume that user is at least somewhat experienced in C programming and
-using GNU utilities for programming.
+I will assume that user is at least somewhat experienced in C and GNU Make.
 
 Currently, I am not sure whether it's possible to use this on Windows natively.
 I am working on Windows 10 Pro with Ubuntu in WSL, and I'm sure any Linux-based
 OS user will be able to use the generator properly, given they're capable of
 GCC installation.
 
-You need to have next three packages installed:
+You need to have next four packages installed:
 
 1. Native GCC (i.e. GNU compiler that generates code for your host system)
 2. GNU Make.
@@ -30,13 +29,13 @@ terminal and execute this line:
 sudo apt install gcc-8-m68k-linux-gnu binutils-m68k-linux-gnu
 ```
 
-It is important to have GCC version 8. It should be in repositories, and it has
+It is important to have GCC version 8. It should already be in repositories, and it has
 much more optimization and code generation options than GCC 7.
 
 ## Usage
 
 Just clone this repo in the place you'd like and run ``make`` there. A file _ProjectName.bin_
-should have appeared in your directory. This is a SEGA MegaDrive/Genesis ROM, and 
+will appear in your directory. This is a generated SEGA MegaDrive/Genesis ROM, and 
 you should be able to run it with any emulator available (e.g. Kega Fusion, Regen, BlastEM).
 
 If everything went OK, you may start writing code in main.c and add more translation
@@ -73,10 +72,10 @@ _PROJ_ is just a name of generated file.
 
 _MAKE\_LST_, _OPTIMIZE_ and _ENABLE\_LTO_ are self-explanatory, I believe. Be careful
 with LTO, though: it reduces ROM size greatly, but may ruin your program altogether. 
-It took me quite a bit of time to tame, and I'm still not sure it will behave.
+It took me quite a bit of time to tame, and I'm still not sure it behaves.
 
 _DEPS_ are list of dependencies of the project. By 'dependency' I mean a static library.
-Static libraries' projects are located in _lib_ directory, and they must be named exactly
+Static library projects are located in _lib_ directory, and they must be named exactly
 the same as _DEPS_ entries.
 
 The library project is rather unusual. Its include files are to be searched in
@@ -104,7 +103,7 @@ handlers at runtime.
 void vblank_handler(void);
 void hblank_handler(void);
 
-int main()
+void main(void)
 {
     m68k_setih(M68KINO_LEVEL_4, &hblank_handler);
     m68k_setih(M68KINO_LEVEL_6, &vblank_handler);
@@ -115,8 +114,8 @@ int main()
 ```
 
 It introduces a little bit of overhead, so you might want to define single
-interrupt handler at compile time. It is possible, and soon there will be library
-for that.
+interrupt handler at compile time. It is certainly possible, and soon there will 
+be library for that.
 
 ## ROM info
 
