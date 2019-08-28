@@ -38,7 +38,7 @@ Just clone this repo in the place you'd like and run ``make`` there. A file _Pro
 will appear in your directory. This is a generated SEGA MegaDrive/Genesis ROM, and 
 you should be able to run it with any emulator available (e.g. Kega Fusion, Regen, BlastEM).
 
-If everything went OK, you may start writing code in main.c and add more translation
+If everything went OK, you may start writing code in _main.c_ and add more translation
 units in _src_ directory. However, if you don't want to change Makefile's innards, do
 not add directories in _src_ directory, as GNU Make doesn't scan recursively.
 
@@ -86,8 +86,8 @@ It is a good habit to introduce a separate directory in _inc_ for each new libra
 
 ### Dependency 'startup'
 
-This dependency contains entry point in ROM. It performs RAM initialization,
-so we could use global variables, calls _main_ and freezes. This library is
+This dependency contains entry point in ROM. It performs RAM initialization
+(so it's possible to use global variables), calls _main_ and freezes. This library is
 essential for ROM functioning.
 
 **You should never remove this dependency, unless you absolutely know what you're doing!**
